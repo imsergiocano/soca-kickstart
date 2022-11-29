@@ -1,0 +1,34 @@
+---
+
+Resources:
+  CodeBuildExecutionRole:
+    Type: AWS::IAM::Role
+    DependsOn: CodeBuildExecutionPolicy
+    Properties:
+      RoleName: CodeBuildExecutionRole
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: codebuild.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodeBuildExecutionPolicy
+
+  CodePipeLineExecutionRole:
+    Type: AWS::IAM::Role
+    DependsOn: CodePipeLineExecutionPolicy
+    Properties:
+      RoleName: CodePipeLineExecutionRole
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: codepipeline.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodePipeLineExecutionPolicy

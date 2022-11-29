@@ -1,0 +1,99 @@
+---
+Conditions:
+  EnvAccountMatches:
+    Fn::Equals:
+    - Ref: AWS::AccountId
+    - ${self:custom.config.${self:provider.stage}.account_id}
+
+Resources:
+  ArtifactBucket:
+    Type: AWS::S3::Bucket
+    Condition: EnvAccountMatches
+  
+
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    DependsOn: CodeBuildExecutionRole
+    Condition: EnvAccountMatches
+    Properties:
+      ServiceRole:
+        Fn::Sub: arn:aws:iam::${self:custom.config.${self:provider.stage}.account_id}:role/CodeBuildExecutionRole
+      Artifacts:
+        Type: CODEPIPELINE
+      BadgeEnabled: false
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:4.0
+        EnvironmentVariables:
+        - Name: STAGE
+          Value: ${self:provider.stage}
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: buildspec.yml
+      TimeoutInMinutes: 30
+      Tags:
+      - Key: Name
+        Value: soca-kickstart
+      - Key: managed-by
+        Value: cloudformation
+
+  Pipeline:
+    Type: AWS::CodePipeline::Pipeline
+    DependsOn: CodePipeLineExecutionRole
+    Condition: EnvAccountMatches
+    Properties:
+      RoleArn:
+        Fn::Sub: arn:aws:iam::${self:custom.config.${self:provider.stage}.account_id}:role/CodePipeLineExecutionRole
+      Stages:
+      - Name: source
+        Actions:
+        - Name: source-kickstart
+          ActionTypeId:
+            Category: Source
+            Owner: ThirdParty
+            Version: '1'
+            Provider: GitHub
+          Configuration:
+            Owner: ${self:custom.config.${self:provider.stage}.code_owner}
+            Repo: soca-kickstart
+            Branch: ${self:custom.config.${self:provider.stage}.branch}
+            OAuthToken: ${self:provider.githubToken}
+            PollForSourceChanges: false
+          OutputArtifacts:
+          - Name: SourceKS
+          RunOrder: 1
+      - Name: deploy
+        Actions:
+        - Name: deploy-pipelines
+          ActionTypeId: 
+            Category: Build
+            Owner: AWS
+            Version: '1'
+            Provider: CodeBuild
+          Configuration:
+            ProjectName:
+              Ref: CodeBuildProject
+          InputArtifacts:
+          - Name: SourceKS
+          RunOrder: 1
+      ArtifactStore:
+        Type: S3
+        Location:
+          Ref: ArtifactBucket
+  WebHook:
+    Type: AWS::CodePipeline::Webhook
+    Condition: EnvAccountMatches
+    Properties:
+      Authentication: GITHUB_HMAC
+      AuthenticationConfiguration:
+        SecretToken: ${self:provider.githubToken}
+      Filters:
+      - JsonPath: ${self:custom.config.${self:provider.stage}.json_path}
+        MatchEquals: ${self:custom.config.${self:provider.stage}.match_equals}
+      TargetPipeline:
+        Ref: Pipeline
+      TargetAction: source-kickstart
+      TargetPipelineVersion:
+        Fn::GetAtt: [Pipeline, Version]
+      RegisterWithThirdParty: true
