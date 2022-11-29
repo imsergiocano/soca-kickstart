@@ -25,7 +25,7 @@ Resources:
           - codebuild:List*
           - logs:*
           - s3:*
-          - ssm:GetParameters
+          - ssm:GetParameter*
           Resource: '*'
         - Effect: Allow
           Action:
