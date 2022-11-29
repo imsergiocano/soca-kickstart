@@ -43,6 +43,7 @@ Resources:
         - Effect: "Allow"
           Action:
           - codepipeline:*
+          - s3:*
           Resource: '*'
         - Effect: Allow
           Action:
