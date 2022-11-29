@@ -27,6 +27,7 @@ Resources:
           - s3:*
           - ssm:GetParameter*
           - cloudformation:*
+          - codepipeline:*
           Resource: '*'
         - Effect: Allow
           Action:
