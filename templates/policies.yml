@@ -26,6 +26,7 @@ Resources:
           - logs:*
           - s3:*
           - ssm:GetParameter*
+          - cloudformation:*
           Resource: '*'
         - Effect: Allow
           Action:
