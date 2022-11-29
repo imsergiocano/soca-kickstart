@@ -24,6 +24,7 @@ Resources:
           - codebuild:DescribeCodeCoverages
           - codebuild:List*
           - logs:GetLogEvents
+          - s3:*
           Resource: '*'
         - Effect: Allow
           Action:
