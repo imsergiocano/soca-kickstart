@@ -23,8 +23,9 @@ Resources:
           - codebuild:DescribeTestCases
           - codebuild:DescribeCodeCoverages
           - codebuild:List*
-          - logs:GetLogEvents
+          - logs:*
           - s3:*
+          - ssm:GetParameters
           Resource: '*'
         - Effect: Allow
           Action:
@@ -45,6 +46,8 @@ Resources:
           Action:
           - codepipeline:*
           - s3:*
+          - codebuild:StartBuild
+          - codebuild:BatchGet*
           Resource: '*'
         - Effect: Allow
           Action:
