@@ -1,0 +1,15 @@
+---
+version: 0.2
+env:
+  parameter-store:
+    GITHUB_TOKEN: github.token
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+    - npm install -g serverless@2.59.0
+  build:
+    commands:
+    - cd $CODEBUILD_SRC_DIR
+    - cd templates && serverless deploy
