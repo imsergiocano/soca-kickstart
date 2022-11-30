@@ -6,6 +6,7 @@ provider:
   runtime: nodejs14.x
   stage: ${opt:stage, 'dev'}
   githubToken: ${ssm:github.token}
+  cfnRole: arn:aws:iam::${self:custom.config.${self:provider.stage}.account_id}:role/CloudFormationExecutionRole
 
 custom:
   config:

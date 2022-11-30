@@ -32,3 +32,19 @@ Resources:
           - sts:AssumeRole
       ManagedPolicyArns:
       - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodePipeLineExecutionPolicy
+
+  CloudFormationExecutionRole:
+    Type: AWS::IAM::Role
+    DependsOn: CloudFormationExecutionPolicy
+    Properties:
+      RoleName: CloudFormationExecutionRole
+      MaxSessionDuration: 3600
+      AssumeRolePolicyDocument:
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: codebuild.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CloudFormationExecutionPolicy

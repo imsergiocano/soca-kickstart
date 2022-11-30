@@ -57,3 +57,27 @@ Resources:
           Resource:
           - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodePipeLineExecutionRole          
   
+  CloudFormationExecutionPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: CloudFormationExecutionPolicy
+      Description: Policy created
+      Path: "/"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Effect: Allow
+          Action:
+          - codebuild:*
+          - logs:*
+          - s3:*
+          - ssm:GetParameter*
+          - cloudformation:*
+          - codepipeline:*
+          - apigateway:*
+          Resource: '*'
+        - Effect: Allow
+          Action:
+          - iam:PassRole
+          Resource:
+          - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CloudFormationExecutionRole
