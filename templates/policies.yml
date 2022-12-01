@@ -31,6 +31,7 @@ Resources:
           - iam:ListPolicyVersions
           - iam:CreatePolicyVersion
           - iam:DeletePolicyVersion
+          - iam:UpdateAssumeRolePolicy
           Resource: '*'
         - Effect: Allow
           Action:
