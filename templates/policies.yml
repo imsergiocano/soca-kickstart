@@ -28,12 +28,20 @@ Resources:
           - ssm:GetParameter*
           - cloudformation:*
           - codepipeline:*
+          - iam:ListPolicyVersions
+          - iam:CreatePolicyVersion
+          - iam:DeletePolicyVersion
           Resource: '*'
         - Effect: Allow
           Action:
           - iam:PassRole
           Resource:
           - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodeBuildExecutionRole
+        - Effect: Allow
+          Action:
+          - iam:PassRole
+          Resource:
+          - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CloudFormationExecutionRole 
   
   CodePipeLineExecutionPolicy:
     Type: AWS::IAM::ManagedPolicy
@@ -81,3 +89,8 @@ Resources:
           - iam:PassRole
           Resource:
           - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CloudFormationExecutionRole
+        - Effect: Allow
+          Action:
+          - iam:PassRole
+          Resource:
+          - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodeBuildExecutionRole 
