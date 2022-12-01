@@ -42,11 +42,7 @@ Resources:
           - iam:PassRole
           Resource:
           - Fn::Sub: arn:aws:iam::${AWS::AccountId}:role/CloudFormationExecutionRole
-        - Effect: Allow
-          Action:
-          - sts:AssumeRole
-          Resource:
-          - Fn::Sub: arn:aws:iam::${AWS::AccountId}:role/CloudFormationExecutionRole 
+
   CodePipeLineExecutionPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
