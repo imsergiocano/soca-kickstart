@@ -42,7 +42,11 @@ Resources:
           - iam:PassRole
           Resource:
           - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CloudFormationExecutionRole 
-  
+        - Effect: Allow
+          Action:
+          - sts:AssumeRole
+          Resource:
+          - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CloudFormationExecutionRole 
   CodePipeLineExecutionPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
@@ -83,6 +87,7 @@ Resources:
           - cloudformation:*
           - codepipeline:*
           - apigateway:*
+          - iam:CreateRole
           Resource: '*'
         - Effect: Allow
           Action:
@@ -92,5 +97,10 @@ Resources:
         - Effect: Allow
           Action:
           - iam:PassRole
+          Resource:
+          - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodeBuildExecutionRole 
+        - Effect: Allow
+          Action:
+          - sts:AssumeRole
           Resource:
           - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CodeBuildExecutionRole 
