@@ -11,7 +11,7 @@ provider:
 custom:
   config:
     dev:
-      account_id: ${opt:accountId, '906495541320'}
+      account_id: ${opt:accountId, '810102036360'}
       branch: dev
       code_owner: ${opt:codeOwner, 'imsergiocano'}
       json_path: '$.ref'
