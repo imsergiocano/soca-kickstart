@@ -36,7 +36,7 @@ Resources:
           Action:
           - iam:PassRole
           Resource:
-          - Fn::Sub: arn:aws:iam::${AWS::AccountId}:policy/CloudFormationExecutionRole
+          - arn:aws:iam::*:role/CloudFormationExecutionRole
 
   CodePipeLineExecutionPolicy:
     Type: AWS::IAM::ManagedPolicy
