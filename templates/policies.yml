@@ -83,4 +83,5 @@ Resources:
           - iam:CreateRole
           - iam:UpdateAssumeRolePolicy
           - iam:UpdateAssumeRolePolicyDocument
+          - iam:AttachRolePolicy
           Resource: '*'
