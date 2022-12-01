@@ -43,7 +43,7 @@ Resources:
         Statement:
         - Effect: Allow
           Principal:
-            Service: codebuild.amazonaws.com
+            Service: cloudformation.amazonaws.com
           Action:
           - sts:AssumeRole
       ManagedPolicyArns:
