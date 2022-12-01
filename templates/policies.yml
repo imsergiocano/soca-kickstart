@@ -86,4 +86,5 @@ Resources:
           - iam:AttachRolePolicy
           - iam:GetRole
           - iam:DetachRolePolicy
+          - lambda:*
           Resource: '*'
