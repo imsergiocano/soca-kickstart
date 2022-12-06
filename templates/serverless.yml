@@ -16,6 +16,4 @@ custom:
       json_path: '$.ref'
       match_equals: ref/heads/{Branch}
 resources:
-  - ${file(policies.yml)}
-  - ${file(roles.yml)}
   - ${file(pipeline.yml)}
