@@ -13,7 +13,6 @@ Resources:
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
-    DependsOn: CodeBuildExecutionRole
     Condition: EnvAccountMatches
     Properties:
       ServiceRole:
@@ -40,7 +39,6 @@ Resources:
 
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
-    DependsOn: CodePipeLineExecutionRole
     Condition: EnvAccountMatches
     Properties:
       RoleArn:
@@ -82,3 +80,19 @@ Resources:
         Location:
           Ref: ArtifactBucket
 
+  WebHook:
+    Type: AWS::CodePipeline::Webhook
+    Condition: EnvAccountMatches
+    Properties:
+      Authentication: GITHUB_HMAC
+      AuthenticationConfiguration:
+        SecretToken: ${self:provider.githubToken}
+      Filters:
+      - JsonPath: ${self:custom.config.${self:provider.stage}.json_path}
+        MatchEquals: ${self:custom.config.${self:provider.stage}.match_equals}
+      TargetPipeline:
+        Ref: Pipeline
+      TargetAction: source-kickstart
+      TargetPipelineVersion:
+        Fn::GetAtt: [Pipeline, Version]
+      RegisterWithThirdParty: true
