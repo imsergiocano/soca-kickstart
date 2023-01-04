@@ -23,7 +23,7 @@ Resources:
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: aws/codebuild/standard:4.0
+        Image: aws/codebuild/standard:6.0
         EnvironmentVariables:
         - Name: STAGE
           Value: ${self:provider.stage}
@@ -80,7 +80,7 @@ Resources:
         Location:
           Ref: ArtifactBucket
 
-  WebHook:
+WebHook:
     Type: AWS::CodePipeline::Webhook
     Condition: EnvAccountMatches
     Properties:

@@ -10,7 +10,7 @@ provider:
 custom:
   config:
     dev:
-      account_id: ${opt:accountId, '921358061875'}
+      account_id: ${opt:accountId, '456269942226'}
       branch: dev
       code_owner: ${opt:codeOwner, 'imsergiocano'}
       json_path: '$.ref'

@@ -6,13 +6,12 @@ env:
     GITHUB_TOKEN: github.token
 phases:
   install:
-    runtime-versions:
-      nodejs: 12
     commands:
+    - node --version
     - npm install -g serverless@3
   build:
     commands:
     - cd $CODEBUILD_SRC_DIR
     - cd templates && serverless deploy
-    - cd $CODEBUILD_SRC_DIR
-    - cd pipelines && serverless deploy
+    # - cd $CODEBUILD_SRC_DIR
+    # - cd pipelines && serverless deploy
