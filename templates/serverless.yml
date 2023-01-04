@@ -1,9 +1,8 @@
 service: soca-kickstart-pipeline
-frameworkVersion: '3'
+frameworkVersion: '>=3.26'
 
 provider:
   name: aws
-  runtime: nodejs14.x
   stage: ${opt:stage, 'dev'}
   githubToken: ${ssm:github.token}
 

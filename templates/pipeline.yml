@@ -80,7 +80,7 @@ Resources:
         Location:
           Ref: ArtifactBucket
 
-WebHook:
+  WebHook:
     Type: AWS::CodePipeline::Webhook
     Condition: EnvAccountMatches
     Properties:
