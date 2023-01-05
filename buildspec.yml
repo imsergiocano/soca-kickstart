@@ -10,6 +10,7 @@ phases:
     - node --version
     - n 12.13.0
     - node --version
+    - dotnet --info
     - npm install -g serverless@3.26
   build:
     commands:
