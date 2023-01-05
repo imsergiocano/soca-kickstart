@@ -8,7 +8,7 @@ phases:
   install:
     commands:
     - node --version
-    - npm install -g n
+    - npm install --location=global n
     - n 12.13.0
     - node --version
     - npm install -g serverless@3.26
